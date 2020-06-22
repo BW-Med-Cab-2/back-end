@@ -46,8 +46,8 @@ public class FoundationApplication
     public static void main(String[] args)
     {
         // Check to see if the environment variables exists. If they do not, stop execution of application.
-        checkEnvironmentVariable("OAUTHCLIENTID");
-        checkEnvironmentVariable("OAUTHCLIENTSECRET");
+//        checkEnvironmentVariable("OAUTHCLIENTID");
+//        checkEnvironmentVariable("OAUTHCLIENTSECRET");
 
         if (!stop)
         {
