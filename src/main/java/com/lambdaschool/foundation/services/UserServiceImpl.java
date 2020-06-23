@@ -274,4 +274,11 @@ public class UserServiceImpl
             throw new ResourceFoundException("Role and User Combination Already Exists");
         }
     }
+
+    @Override
+    public User getCurrentUser() {
+        String currentUser = userAuditing.getCurrentAuditor().get();
+        User user = userrepos.findByUsername(currentUser);
+        return user;
+    }
 }

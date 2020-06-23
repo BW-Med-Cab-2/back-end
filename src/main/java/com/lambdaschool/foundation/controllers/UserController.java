@@ -148,6 +148,18 @@ public class UserController
                                     HttpStatus.OK);
     }
 
+    @ApiOperation(value = "returns the current user",
+            response = User.class,
+            responseContainer = "List")
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping(value = "/currentuser",
+            produces = {"application/json"})
+    public ResponseEntity<?> getCurrentUser()
+    {
+        return new ResponseEntity<>(userService.getCurrentUser(),
+                HttpStatus.OK);
+    }
+
     /**
      * Given a complete User Object, create a new User record and accompanying useremail records
      * and user role records.

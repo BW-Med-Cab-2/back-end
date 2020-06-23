@@ -90,28 +90,6 @@ public class SeedData
 
 
         // Admin seed end ---------------------------------------------------------------------
-
-        // data, user
-        ArrayList<UserRoles> datas = new ArrayList<>();
-        datas.add(new UserRoles(new User(),
-                                r3));
-        datas.add(new UserRoles(new User(),
-                                r2));
-        User u2 = new User("Finn the Human",
-                           "password",
-                           "Finn@AT.OO",
-                           datas);
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                                   "other@mymail.local"));
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                                   "otherother@mymail.local"));
-        u2.getUseremails()
-                .add(new Useremail(u2,
-                                   "otherotherother@email.local"));
-        userService.save(u2);
-
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
         users.add(new UserRoles(new User(),
@@ -142,6 +120,16 @@ public class SeedData
                            "BMO@AT.OO",
                            users);
         userService.save(u5);
+
+        users = new ArrayList<>();
+        users.add(new UserRoles(new User(), r2));
+        User u6 = new User("Finn the Human", "password", "FTH@oo.org", users);
+        userService.save(u6);
+
+        users = new ArrayList<>();
+        users.add(new UserRoles(new User(), r2));
+        User u7 = new User("tempuser", "password", "tempuser@gmail.com", users);
+        userService.save(u7);
 
         // using JavaFaker create a bunch of regular users
         // https://www.baeldung.com/java-faker
