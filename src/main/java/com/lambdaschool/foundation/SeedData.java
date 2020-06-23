@@ -3,10 +3,8 @@ package com.lambdaschool.foundation;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import com.lambdaschool.foundation.models.Role;
-import com.lambdaschool.foundation.models.User;
-import com.lambdaschool.foundation.models.UserRoles;
-import com.lambdaschool.foundation.models.Useremail;
+import com.lambdaschool.foundation.models.*;
+import com.lambdaschool.foundation.repository.StrainRepository;
 import com.lambdaschool.foundation.services.RoleService;
 import com.lambdaschool.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,10 @@ import java.util.Locale;
 public class SeedData
         implements CommandLineRunner
 {
+
+    @Autowired
+    StrainRepository strainrepos;
+
     /**
      * Connects the Role Service to this process
      */
@@ -130,6 +132,18 @@ public class SeedData
         users.add(new UserRoles(new User(), r2));
         User u7 = new User("tempuser", "password", "tempuser@gmail.com", users);
         userService.save(u7);
+
+
+        // STRAINS!!!
+        Strain s1 = new Strain("Afpak",
+                " Earthy, Chemical, Pine",
+                " Relaxed, Hungry, Happy, Sleepy",
+                "Depression, Insomnia, Pain, Stress, Lack of Appetite",
+                "hybrid",
+                4.2,
+                " Pine,Spicy/Herbal,Earthy");
+
+        strainrepos.save(s1);
 
         // using JavaFaker create a bunch of regular users
         // https://www.baeldung.com/java-faker
