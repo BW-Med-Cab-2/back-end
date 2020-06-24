@@ -24,3 +24,4 @@ public class StrainController {
         return new ResponseEntity<>(allStrains, HttpStatus.OK);
     }
 }
+

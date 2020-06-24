@@ -23,12 +23,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * SeedData puts both known and random data into the database. It implements CommandLineRunner.
- * <p>
- * CoomandLineRunner: Spring Boot automatically runs the run method once and only once
- * after the application context has been loaded.
- */
 @Transactional
 @Component
 public class SeedData
@@ -73,34 +67,6 @@ public class SeedData
         r2 = roleService.save(r2);
         r3 = roleService.save(r3);
 
-        // Admin seed -------------------------------------------------------------------------
-
-        // admin, data, user
-//        ArrayList<UserRoles> admins = new ArrayList<>();
-
-
-/*        admins.add(new UserRoles(new User(),
-                                 r1));
-        admins.add(new UserRoles(new User(),
-                                 r2));
-        admins.add(new UserRoles(new User(),
-                                 r3));
-        User u1 = new User("admin",
-                           "password",
-                           "admin@lambdaschool.local",
-                           admins);
-        u1.getUseremails()
-                .add(new Useremail(u1,
-                                   "admin@email.local"));
-        u1.getUseremails()
-                .add(new Useremail(u1,
-                                   "admin@mymail.local"));
-
-        userService.save(u1);*/
-
-
-        // Admin seed end ---------------------------------------------------------------------
-        // user
         ArrayList<UserRoles> users = new ArrayList<>();
         users.add(new UserRoles(new User(),
                                 r2));
@@ -108,9 +74,6 @@ public class SeedData
                            "DiMaggio!",
                            "jake@Shape.go",
                            users);
-        u3.getUseremails()
-                .add(new Useremail(u3,
-                                   "other@email.local"));
         userService.save(u3);
 
         users = new ArrayList<>();
@@ -142,6 +105,7 @@ public class SeedData
         userService.save(u7);
 
 
+        // Get Strains from DS and plop them into seed data
         RestTemplate restTemplate = new RestTemplate();
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
@@ -164,18 +128,6 @@ public class SeedData
         for (Strain s : ourStrains) {
             strainrepos.save(s);
         }
-
-
-        // STRAINS!!!
-//        Strain s1 = new Strain("Afpak",
-//                " Earthy, Chemical, Pine",
-//                " Relaxed, Hungry, Happy, Sleepy",
-//                "Depression, Insomnia, Pain, Stress, Lack of Appetite",
-//                "hybrid",
-//                4.2,
-//                " Pine,Spicy/Herbal,Earthy");
-
-//        strainrepos.save(s1);
 
         // using JavaFaker create a bunch of regular users
         // https://www.baeldung.com/java-faker
