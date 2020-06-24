@@ -4,6 +4,7 @@ import com.lambdaschool.foundation.exceptions.ResourceFoundException;
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.handlers.HelperFunctions;
 import com.lambdaschool.foundation.models.Role;
+import com.lambdaschool.foundation.models.StrainModel;
 import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.models.UserRoles;
 import com.lambdaschool.foundation.repository.UserRepository;
@@ -193,6 +194,8 @@ public class UserServiceImpl
                                 ur.getRole()
                                         .getRoleid());
                 }
+
+                user.setCurrentStrain(user.getCurrentStrain());
             }
 
 

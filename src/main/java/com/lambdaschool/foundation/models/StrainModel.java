@@ -1,9 +1,16 @@
 package com.lambdaschool.foundation.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "currentstrain")
 public class StrainModel {
 
     private String strain;
 
+    @Id
     private long id;
 
     private String flavors;

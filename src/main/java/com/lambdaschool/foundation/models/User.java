@@ -74,7 +74,8 @@ public class User
             allowSetters = true)
     private List<UserRoles> roles = new ArrayList<>();
 
-    @Transient
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "currentstrain", referencedColumnName = "id")
     private StrainModel currentStrain;
 
     public User()
@@ -149,9 +150,6 @@ public class User
         this.password = password;
     }
 
-    /**
-     * @param password the new password (String) for this user. Comes in plain text and goes out encrypted
-     */
     public void setPassword(String password)
     {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

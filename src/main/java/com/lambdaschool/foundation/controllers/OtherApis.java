@@ -108,6 +108,8 @@ public class OtherApis {
         User currentUser = userService.getCurrentUser();
         currentUser.setCurrentStrain(strainModel);
 
+        userService.update(currentUser, currentUser.getUserid());
+
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 }
