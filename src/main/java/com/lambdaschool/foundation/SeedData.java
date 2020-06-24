@@ -9,10 +9,18 @@ import com.lambdaschool.foundation.services.RoleService;
 import com.lambdaschool.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -134,16 +142,40 @@ public class SeedData
         userService.save(u7);
 
 
-        // STRAINS!!!
-        Strain s1 = new Strain("Afpak",
-                " Earthy, Chemical, Pine",
-                " Relaxed, Hungry, Happy, Sleepy",
-                "Depression, Insomnia, Pain, Stress, Lack of Appetite",
-                "hybrid",
-                4.2,
-                " Pine,Spicy/Herbal,Earthy");
+        RestTemplate restTemplate = new RestTemplate();
 
-        strainrepos.save(s1);
+        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+        restTemplate.getMessageConverters().add(converter);
+
+        String requestURL = "https://med-cab-1415.herokuapp.com/strains";
+
+        ParameterizedTypeReference<List<Strain>> responseType = new ParameterizedTypeReference<>()
+        {
+        };
+
+        ResponseEntity<List<Strain>> responseEntity = restTemplate.exchange(requestURL,
+                HttpMethod.GET,
+                null,
+                responseType);
+
+        List<Strain> ourStrains = responseEntity.getBody();
+
+        for (Strain s : ourStrains) {
+            strainrepos.save(s);
+        }
+
+
+        // STRAINS!!!
+//        Strain s1 = new Strain("Afpak",
+//                " Earthy, Chemical, Pine",
+//                " Relaxed, Hungry, Happy, Sleepy",
+//                "Depression, Insomnia, Pain, Stress, Lack of Appetite",
+//                "hybrid",
+//                4.2,
+//                " Pine,Spicy/Herbal,Earthy");
+
+//        strainrepos.save(s1);
 
         // using JavaFaker create a bunch of regular users
         // https://www.baeldung.com/java-faker
