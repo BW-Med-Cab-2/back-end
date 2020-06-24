@@ -91,7 +91,6 @@ public class OpenController
         headers.setAccept(acceptableMediaTypes);
         headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
                              System.getenv("OAUTHCLIENTSECRET"));
-//        headers.setBasicAuth("lambda-client", "lambda-secret");
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("grant_type",
