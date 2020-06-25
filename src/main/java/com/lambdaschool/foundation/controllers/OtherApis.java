@@ -85,7 +85,7 @@ public class OtherApis {
         return new ResponseEntity<>(topWhatever, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/strainmodel/{somestring}")
+    @GetMapping(value = "/strainmodel/{somestring}")
     public ResponseEntity<?> sendStrainInfo(
             @Valid
             @PathVariable
