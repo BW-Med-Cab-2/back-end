@@ -15,7 +15,7 @@ https://medcab2.herokuapp.com/otherapis/toptenrating
 https://medcab2.herokuapp.com/otherapis/toptenflavor
 ```
 
-##createnewuser
+## createnewuser
 
 <details>
 <summary>POST https://medcab2.herokuapp.com/createnewuser</summary>
@@ -39,7 +39,7 @@ OUTPUT
 ```
 </details>
 
-##users
+## users
 
 <details>
 <summary>https://medcab2.herokuapp.com/users/users</summary>
@@ -144,7 +144,7 @@ OUTPUT
 ```
 </details>
 
-##strains
+## strains
 <details>
 <summary>https://medcab2.herokuapp.com/strains/strains</summary>
 
@@ -199,7 +199,7 @@ OUTPUT
 ```
 </details>
 
-##strainmodel
+## strainmodel
 
 <details>
 <summary>https://medcab2.herokuapp.com/otherapis/strainmodel</summary>
@@ -246,7 +246,7 @@ OUTPUT
 ```
 </details>
 
-##topten
+## topten
 <details>
 <summary>https://medcab2.herokuapp.com/otherapis/toptenrating</summary>
 
