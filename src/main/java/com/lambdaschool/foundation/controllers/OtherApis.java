@@ -1,4 +1,5 @@
 package com.lambdaschool.foundation.controllers;
+
 import com.lambdaschool.foundation.models.StrainModel;
 import com.lambdaschool.foundation.models.TopWhatever;
 import com.lambdaschool.foundation.models.User;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
@@ -20,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/otherapis")
 public class OtherApis {
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     UserService userService;
@@ -33,7 +37,8 @@ public class OtherApis {
 
         String requestURL = "https://med-cab-1415.herokuapp.com/model";
 
-        ParameterizedTypeReference<StrainModel> responseType = new ParameterizedTypeReference<>(){};
+        ParameterizedTypeReference<StrainModel> responseType = new ParameterizedTypeReference<>() {
+        };
 
         ResponseEntity<StrainModel> responseEntity = restTemplate.exchange(requestURL,
                 HttpMethod.GET,
@@ -53,7 +58,8 @@ public class OtherApis {
 
         String requestURL = "https://greensolx2.herokuapp.com/toptenrating";
 
-        ParameterizedTypeReference<List<TopWhatever>> responseType = new ParameterizedTypeReference<>(){};
+        ParameterizedTypeReference<List<TopWhatever>> responseType = new ParameterizedTypeReference<>() {
+        };
 
         ResponseEntity<List<TopWhatever>> responseEntity = restTemplate.exchange(requestURL,
                 HttpMethod.GET,
@@ -73,7 +79,8 @@ public class OtherApis {
 
         String requestURL = "https://greensolx2.herokuapp.com/toptenflavor";
 
-        ParameterizedTypeReference<List<TopWhatever>> responseType = new ParameterizedTypeReference<>(){};
+        ParameterizedTypeReference<List<TopWhatever>> responseType = new ParameterizedTypeReference<>() {
+        };
 
         ResponseEntity<List<TopWhatever>> responseEntity = restTemplate.exchange(requestURL,
                 HttpMethod.GET,
@@ -89,14 +96,15 @@ public class OtherApis {
     public ResponseEntity<?> sendStrainInfo(
             @Valid
             @PathVariable
-                String somestring) {
+                    String somestring) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
         restTemplate.getMessageConverters().add(converter);
 
         String requestURL = "https://med-cab-1415.herokuapp.com/model/" + somestring;
 
-        ParameterizedTypeReference<StrainModel> responseType = new ParameterizedTypeReference<>(){};
+        ParameterizedTypeReference<StrainModel> responseType = new ParameterizedTypeReference<>() {
+        };
 
         ResponseEntity<StrainModel> responseEntity = restTemplate.exchange(requestURL,
                 HttpMethod.GET,

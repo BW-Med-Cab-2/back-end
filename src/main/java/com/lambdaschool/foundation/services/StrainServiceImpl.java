@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "strainService")
-public class StrainServiceImpl implements StrainService{
+public class StrainServiceImpl implements StrainService {
 
     @Autowired
     StrainRepository strainrepos;

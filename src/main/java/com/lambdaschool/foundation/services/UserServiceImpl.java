@@ -4,7 +4,6 @@ import com.lambdaschool.foundation.exceptions.ResourceFoundException;
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.handlers.HelperFunctions;
 import com.lambdaschool.foundation.models.Role;
-import com.lambdaschool.foundation.models.StrainModel;
 import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.models.UserRoles;
 import com.lambdaschool.foundation.repository.UserRepository;
@@ -21,8 +20,7 @@ import java.util.List;
 @Transactional
 @Service(value = "userService")
 public class UserServiceImpl
-        implements UserService
-{
+        implements UserService {
     /**
      * Connects this service to the User table.
      */
@@ -49,21 +47,18 @@ public class UserServiceImpl
 
     public User findUserById(long id)
             throws
-            ResourceNotFoundException
-    {
+            ResourceNotFoundException {
         return userrepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
     }
 
     @Override
-    public List<User> findByNameContaining(String username)
-    {
+    public List<User> findByNameContaining(String username) {
         return userrepos.findByUsernameContainingIgnoreCase(username.toLowerCase());
     }
 
     @Override
-    public List<User> findAll()
-    {
+    public List<User> findAll() {
         List<User> list = new ArrayList<>();
         /*
          * findAll returns an iterator set.
@@ -77,19 +72,16 @@ public class UserServiceImpl
 
     @Transactional
     @Override
-    public void delete(long id)
-    {
+    public void delete(long id) {
         userrepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + id + " not found!"));
         userrepos.deleteById(id);
     }
 
     @Override
-    public User findByName(String name)
-    {
+    public User findByName(String name) {
         User uu = userrepos.findByUsername(name.toLowerCase());
-        if (uu == null)
-        {
+        if (uu == null) {
             throw new ResourceNotFoundException("User name " + name + " not found!");
         }
         return uu;
@@ -97,51 +89,44 @@ public class UserServiceImpl
 
     @Transactional
     @Override
-    public User save(User user)
-    {
+    public User save(User user) {
         User newUser = new User();
 
-        if (user.getUserid() != 0)
-        {
+        if (user.getUserid() != 0) {
             User oldUser = userrepos.findById(user.getUserid())
                     .orElseThrow(() -> new ResourceNotFoundException("User id " + user.getUserid() + " not found!"));
 
             // delete the roles for the old user we are replacing
-            for (UserRoles ur : oldUser.getRoles())
-            {
+            for (UserRoles ur : oldUser.getRoles()) {
                 deleteUserRole(ur.getUser()
-                                       .getUserid(),
-                               ur.getRole()
-                                       .getRoleid());
+                                .getUserid(),
+                        ur.getRole()
+                                .getRoleid());
             }
             newUser.setUserid(user.getUserid());
         }
 
         newUser.setUsername(user.getUsername()
-                                    .toLowerCase());
+                .toLowerCase());
         newUser.setPasswordNoEncrypt(user.getPassword());
         newUser.setPrimaryemail(user.getPrimaryemail()
-                                        .toLowerCase());
+                .toLowerCase());
 
         newUser.getRoles()
                 .clear();
-        if (user.getUserid() == 0)
-        {
-            for (UserRoles ur : user.getRoles())
-            {
+        if (user.getUserid() == 0) {
+            for (UserRoles ur : user.getRoles()) {
                 Role newRole = roleService.findRoleById(ur.getRole()
-                                                                .getRoleid());
+                        .getRoleid());
 
                 newUser.addRole(newRole);
             }
-        } else
-        {
+        } else {
             // add the new roles for the user we are replacing
-            for (UserRoles ur : user.getRoles())
-            {
+            for (UserRoles ur : user.getRoles()) {
                 addUserRole(newUser.getUserid(),
-                            ur.getRole()
-                                    .getRoleid());
+                        ur.getRole()
+                                .getRoleid());
             }
         }
 
@@ -152,47 +137,39 @@ public class UserServiceImpl
     @Override
     public User update(
             User user,
-            long id)
-    {
+            long id) {
         User currentUser = findUserById(id);
 
-        if (helper.isAuthorizedToMakeChange(currentUser.getUsername()))
-        {
-            if (user.getUsername() != null)
-            {
+        if (helper.isAuthorizedToMakeChange(currentUser.getUsername())) {
+            if (user.getUsername() != null) {
                 currentUser.setUsername(user.getUsername()
-                                                .toLowerCase());
+                        .toLowerCase());
             }
 
-            if (user.getPassword() != null)
-            {
+            if (user.getPassword() != null) {
                 currentUser.setPasswordNoEncrypt(user.getPassword());
             }
 
-            if (user.getPrimaryemail() != null)
-            {
+            if (user.getPrimaryemail() != null) {
                 currentUser.setPrimaryemail(user.getPrimaryemail()
-                                                    .toLowerCase());
+                        .toLowerCase());
             }
 
             if (user.getRoles()
-                    .size() > 0)
-            {
+                    .size() > 0) {
                 // delete the roles for the old user we are replacing
-                for (UserRoles ur : currentUser.getRoles())
-                {
+                for (UserRoles ur : currentUser.getRoles()) {
                     deleteUserRole(ur.getUser()
-                                           .getUserid(),
-                                   ur.getRole()
-                                           .getRoleid());
+                                    .getUserid(),
+                            ur.getRole()
+                                    .getRoleid());
                 }
 
                 // add the new roles for the user we are replacing
-                for (UserRoles ur : user.getRoles())
-                {
+                for (UserRoles ur : user.getRoles()) {
                     addUserRole(currentUser.getUserid(),
-                                ur.getRole()
-                                        .getRoleid());
+                            ur.getRole()
+                                    .getRoleid());
                 }
 
                 user.setCurrentStrain(user.getCurrentStrain());
@@ -200,8 +177,7 @@ public class UserServiceImpl
 
 
             return userrepos.save(currentUser);
-        } else
-        {
+        } else {
             {
                 // note we should never get to this line but is needed for the compiler
                 // to recognize that this exception can be thrown
@@ -214,20 +190,17 @@ public class UserServiceImpl
     @Override
     public void deleteUserRole(
             long userid,
-            long roleid)
-    {
+            long roleid) {
         userrepos.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         roleService.findRoleById(roleid);
 
         if (userrepos.checkUserRolesCombo(userid,
-                                          roleid)
-                .getCount() > 0)
-        {
+                roleid)
+                .getCount() > 0) {
             userrepos.deleteUserRoles(userid,
-                                      roleid);
-        } else
-        {
+                    roleid);
+        } else {
             throw new ResourceNotFoundException("Role and User Combination Does Not Exists");
         }
     }
@@ -236,22 +209,19 @@ public class UserServiceImpl
     @Override
     public void addUserRole(
             long userid,
-            long roleid)
-    {
+            long roleid) {
         userrepos.findById(userid)
                 .orElseThrow(() -> new ResourceNotFoundException("User id " + userid + " not found!"));
         roleService.findRoleById(roleid);
 
         if (userrepos.checkUserRolesCombo(userid,
-                                          roleid)
-                .getCount() <= 0)
-        {
+                roleid)
+                .getCount() <= 0) {
             userrepos.insertUserRoles(userAuditing.getCurrentAuditor()
-                                              .get(),
-                                      userid,
-                                      roleid);
-        } else
-        {
+                            .get(),
+                    userid,
+                    roleid);
+        } else {
             throw new ResourceFoundException("Role and User Combination Already Exists");
         }
     }

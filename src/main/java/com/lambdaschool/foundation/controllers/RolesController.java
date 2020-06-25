@@ -6,15 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -26,8 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/roles")
-public class RolesController
-{
+public class RolesController {
     /**
      * Using the Role service to process Role data
      */
@@ -43,11 +34,10 @@ public class RolesController
      */
     @GetMapping(value = "/roles",
             produces = {"application/json"})
-    public ResponseEntity<?> listRoles()
-    {
+    public ResponseEntity<?> listRoles() {
         List<Role> allRoles = roleService.findAll();
         return new ResponseEntity<>(allRoles,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -62,11 +52,10 @@ public class RolesController
             produces = {"application/json"})
     public ResponseEntity<?> getRoleById(
             @PathVariable
-                    Long roleId)
-    {
+                    Long roleId) {
         Role r = roleService.findRoleById(roleId);
         return new ResponseEntity<>(r,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -81,11 +70,10 @@ public class RolesController
             produces = {"application/json"})
     public ResponseEntity<?> getRoleByName(
             @PathVariable
-                    String roleName)
-    {
+                    String roleName) {
         Role r = roleService.findByName(roleName);
         return new ResponseEntity<>(r,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -101,8 +89,7 @@ public class RolesController
     public ResponseEntity<?> addNewRole(
             @Valid
             @RequestBody
-                    Role newRole)
-    {
+                    Role newRole) {
         // ids are not recognized by the Post method
         newRole.setRoleid(0);
         newRole = roleService.save(newRole);
@@ -116,8 +103,8 @@ public class RolesController
         responseHeaders.setLocation(newRoleURI);
 
         return new ResponseEntity<>(null,
-                                    responseHeaders,
-                                    HttpStatus.CREATED);
+                responseHeaders,
+                HttpStatus.CREATED);
     }
 
     /**
@@ -130,8 +117,7 @@ public class RolesController
     @DeleteMapping(value = "/role/{id}")
     public ResponseEntity<?> deleteRoleById(
             @PathVariable
-                    long id)
-    {
+                    long id) {
         roleService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -151,10 +137,9 @@ public class RolesController
                     long roleid,
             @Valid
             @RequestBody
-                    Role newRole)
-    {
+                    Role newRole) {
         newRole = roleService.update(roleid,
-                                     newRole);
+                newRole);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -173,10 +158,9 @@ public class RolesController
                     long roleid,
             @Valid
             @RequestBody
-                    Role newRole)
-    {
+                    Role newRole) {
         newRole = roleService.update(roleid,
-                                     newRole);
+                newRole);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

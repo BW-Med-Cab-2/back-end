@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * The service that works with the Role Model.
  */
-public interface RoleService
-{
+public interface RoleService {
     /**
      * Returns a list of all Role objects
      *

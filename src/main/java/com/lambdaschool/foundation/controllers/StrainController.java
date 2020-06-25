@@ -18,7 +18,7 @@ public class StrainController {
     StrainService strainService;
 
     @GetMapping(value = "/strains",
-    produces = {"application/json"})
+            produces = {"application/json"})
     public ResponseEntity<?> listStrains() {
         List<Strain> allStrains = strainService.findAll();
         return new ResponseEntity<>(allStrains, HttpStatus.OK);

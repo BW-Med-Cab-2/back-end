@@ -1,10 +1,12 @@
 package com.lambdaschool.foundation.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "strains")
-public class Strain extends Auditable{
+public class Strain extends Auditable {
 
     @Id
     private long id;

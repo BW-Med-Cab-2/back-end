@@ -2,12 +2,7 @@ package com.lambdaschool.foundation.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -26,8 +21,7 @@ import java.util.Objects;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roleid"})})
 public class UserRoles
         extends Auditable
-        implements Serializable
-{
+        implements Serializable {
     /**
      * 1/2 of the primary key (long) for userroles.
      * Also is a foreign key into the users table
@@ -53,8 +47,7 @@ public class UserRoles
     /**
      * Default constructor used primarily by the JPA.
      */
-    public UserRoles()
-    {
+    public UserRoles() {
     }
 
     /**
@@ -65,8 +58,7 @@ public class UserRoles
      */
     public UserRoles(
             User user,
-            Role role)
-    {
+            Role role) {
         this.user = user;
         this.role = role;
     }
@@ -76,8 +68,7 @@ public class UserRoles
      *
      * @return the complete user object associated with user role combination
      */
-    public User getUser()
-    {
+    public User getUser() {
         return user;
     }
 
@@ -86,8 +77,7 @@ public class UserRoles
      *
      * @param user change the user object associated with this user role combination to this one.
      */
-    public void setUser(User user)
-    {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -96,8 +86,7 @@ public class UserRoles
      *
      * @return the complete role object associated with this user role combination
      */
-    public Role getRole()
-    {
+    public Role getRole() {
         return role;
     }
 
@@ -106,20 +95,16 @@ public class UserRoles
      *
      * @param role change role object associated with this user role combination to this one.
      */
-    public void setRole(Role role)
-    {
+    public void setRole(Role role) {
         this.role = role;
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass())
-        {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         UserRoles userRoles = (UserRoles) o;
@@ -128,9 +113,8 @@ public class UserRoles
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(getUser(),
-                            getRole());
+                getRole());
     }
 }

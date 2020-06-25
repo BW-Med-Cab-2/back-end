@@ -25,85 +25,73 @@ import static junit.framework.TestCase.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FoundationApplication.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserServiceImplTest
-{
+public class UserServiceImplTest {
     @Autowired
     private UserService userService;
 
     @Before
     public void setUp() throws
-            Exception
-    {
+            Exception {
         MockitoAnnotations.initMocks(this);
     }
 
     @After
     public void tearDown() throws
-            Exception
-    {
+            Exception {
     }
 
     @Test
-    public void B_findUserById()
-    {
+    public void B_findUserById() {
         assertEquals("admin", userService.findUserById(4)
                 .getUsername());
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void BA_findUserByIdNotFound()
-    {
+    public void BA_findUserByIdNotFound() {
         assertEquals("admin", userService.findUserById(10)
                 .getUsername());
     }
 
     @Test
-    public void C_findAll()
-    {
+    public void C_findAll() {
         assertEquals(5, userService.findAll()
                 .size());
     }
 
     @Test
-    public void D_delete()
-    {
+    public void D_delete() {
         userService.delete(13);
         assertEquals(4, userService.findAll()
                 .size());
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void DA_notFoundDelete()
-    {
+    public void DA_notFoundDelete() {
         userService.delete(100);
         assertEquals(4, userService.findAll()
                 .size());
     }
 
     @Test
-    public void E_findByUsername()
-    {
+    public void E_findByUsername() {
         assertEquals("admin", userService.findByName("admin")
                 .getUsername());
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void AA_findByUsernameNotfound()
-    {
+    public void AA_findByUsernameNotfound() {
         assertEquals("admin", userService.findByName("turtle")
                 .getUsername());
     }
 
     @Test
-    public void AB_findByNameContaining()
-    {
+    public void AB_findByNameContaining() {
         assertEquals(4, userService.findByNameContaining("a")
                 .size());
     }
 
     @Test
-    public void F_save()
-    {
+    public void F_save() {
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("tiger", "ILuvMath!", "tiger@school.lambda", datas);
 
@@ -119,8 +107,7 @@ public class UserServiceImplTest
     @Transactional
     @WithUserDetails("cinnamon")
     @Test
-    public void G_update()
-    {
+    public void G_update() {
         ArrayList<UserRoles> datas = new ArrayList<>();
         User u2 = new User("cinnamon", "password", "cinnamon@school.lambda", datas);
 
@@ -136,8 +123,7 @@ public class UserServiceImplTest
     @Transactional
     @WithUserDetails("cinnamon")
     @Test(expected = ResourceNotFoundException.class)
-    public void GB_updateNotCurrentUserNorAdmin()
-    {
+    public void GB_updateNotCurrentUserNorAdmin() {
         Role r2 = new Role("user");
 
         ArrayList<UserRoles> datas = new ArrayList<>();
@@ -152,26 +138,22 @@ public class UserServiceImplTest
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void HA_deleteUserRoleRoleNotFound()
-    {
+    public void HA_deleteUserRoleRoleNotFound() {
         userService.deleteUserRole(7, 50);
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void HB_deleteUserRoleUserNotFound()
-    {
+    public void HB_deleteUserRoleUserNotFound() {
         userService.deleteUserRole(50, 2);
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void IC_addUserRoleRoleNotFound()
-    {
+    public void IC_addUserRoleRoleNotFound() {
         userService.addUserRole(7, 50);
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void ID_addUserRoleUserNotFound()
-    {
+    public void ID_addUserRoleUserNotFound() {
         userService.addUserRole(50, 2);
     }
 }

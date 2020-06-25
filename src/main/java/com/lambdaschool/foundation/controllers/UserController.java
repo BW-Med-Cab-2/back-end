@@ -13,15 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -34,8 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/users")
-public class UserController
-{
+public class UserController {
     /**
      * Using the User service to process user data
      */
@@ -55,11 +46,10 @@ public class UserController
     @PreAuthorize("hasAnyRole('USER')")
     @GetMapping(value = "/users",
             produces = {"application/json"})
-    public ResponseEntity<?> listAllUsers()
-    {
+    public ResponseEntity<?> listAllUsers() {
         List<User> myUsers = userService.findAll();
         return new ResponseEntity<>(myUsers,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -85,11 +75,10 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    Long userId)
-    {
+                    Long userId) {
         User u = userService.findUserById(userId);
         return new ResponseEntity<>(u,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -115,11 +104,10 @@ public class UserController
                     required = true,
                     example = "johnmitchell")
             @PathVariable
-                    String userName)
-    {
+                    String userName) {
         User u = userService.findByName(userName);
         return new ResponseEntity<>(u,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     /**
@@ -141,11 +129,10 @@ public class UserController
             produces = {"application/json"})
     public ResponseEntity<?> getUserLikeName(
             @PathVariable
-                    String userName)
-    {
+                    String userName) {
         List<User> u = userService.findByNameContaining(userName);
         return new ResponseEntity<>(u,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 
     @ApiOperation(value = "returns the current user",
@@ -154,8 +141,7 @@ public class UserController
     @PreAuthorize("hasAnyRole('USER')")
     @GetMapping(value = "/currentuser",
             produces = {"application/json"})
-    public ResponseEntity<?> getCurrentUser()
-    {
+    public ResponseEntity<?> getCurrentUser() {
         return new ResponseEntity<>(userService.getCurrentUser(),
                 HttpStatus.OK);
     }
@@ -185,8 +171,7 @@ public class UserController
             @RequestBody
                     User newuser)
             throws
-            URISyntaxException
-    {
+            URISyntaxException {
         newuser.setUserid(0);
         newuser = userService.save(newuser);
 
@@ -199,8 +184,8 @@ public class UserController
         responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(null,
-                                    responseHeaders,
-                                    HttpStatus.CREATED);
+                responseHeaders,
+                HttpStatus.CREATED);
     }
 
     /**
@@ -234,8 +219,7 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    long userid)
-    {
+                    long userid) {
         updateUser.setUserid(userid);
         userService.save(updateUser);
 
@@ -270,10 +254,9 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    long id)
-    {
+                    long id) {
         userService.update(updateUser,
-                           id);
+                id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -297,8 +280,7 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    long id)
-    {
+                    long id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -329,10 +311,9 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    long roleid)
-    {
+                    long roleid) {
         userService.deleteUserRole(userid,
-                                   roleid);
+                roleid);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -363,10 +344,9 @@ public class UserController
                     required = true,
                     example = "4")
             @PathVariable
-                    long roleid)
-    {
+                    long roleid) {
         userService.addUserRole(userid,
-                                roleid);
+                roleid);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -383,10 +363,9 @@ public class UserController
             response = User.class)
     @GetMapping(value = "/getuserinfo",
             produces = {"application/json"})
-    public ResponseEntity<?> getCurrentUserInfo(Authentication authentication)
-    {
+    public ResponseEntity<?> getCurrentUserInfo(Authentication authentication) {
         User u = userService.findByName(authentication.getName());
         return new ResponseEntity<>(u,
-                                    HttpStatus.OK);
+                HttpStatus.OK);
     }
 }

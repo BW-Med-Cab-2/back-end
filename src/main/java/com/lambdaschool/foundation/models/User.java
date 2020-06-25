@@ -23,8 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User
-        extends Auditable
-{
+        extends Auditable {
     @ApiModelProperty(name = "user id",
             value = "primary key for User",
             required = true,
@@ -78,100 +77,83 @@ public class User
     @JoinColumn(name = "currentstrain", referencedColumnName = "id")
     private StrainModel currentStrain;
 
-    public User()
-    {
+    public User() {
     }
 
     public User(
             String username,
             String password,
             String primaryemail,
-            List<UserRoles> userRoles)
-    {
+            List<UserRoles> userRoles) {
         setUsername(username);
         setPassword(password);
         setPrimaryemail(primaryemail);
-        for (UserRoles ur : userRoles)
-        {
+        for (UserRoles ur : userRoles) {
             ur.setUser(this);
         }
         this.roles = userRoles;
     }
 
-    public long getUserid()
-    {
+    public long getUserid() {
         return userid;
     }
 
-    public void setUserid(long userid)
-    {
+    public void setUserid(long userid) {
         this.userid = userid;
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         if (username == null) // this is possible when updating a user
         {
             return null;
-        } else
-        {
+        } else {
             return username.toLowerCase();
         }
     }
 
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username.toLowerCase();
     }
 
-    public String getPrimaryemail()
-    {
+    public String getPrimaryemail() {
         if (primaryemail == null) // this is possible when updating a user
         {
             return null;
-        } else
-        {
+        } else {
             return primaryemail.toLowerCase();
         }
     }
 
-    public void setPrimaryemail(String primaryemail)
-    {
+    public void setPrimaryemail(String primaryemail) {
         this.primaryemail = primaryemail.toLowerCase();
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPasswordNoEncrypt(String password)
-    {
+    public void setPasswordNoEncrypt(String password) {
         this.password = password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
     }
 
-    public List<UserRoles> getRoles()
-    {
+    public List<UserRoles> getRoles() {
         return roles;
     }
 
 
-    public void setRoles(List<UserRoles> roles)
-    {
+    public void setRoles(List<UserRoles> roles) {
         this.roles = roles;
     }
 
 
-    public void addRole(Role role)
-    {
+    public void addRole(Role role) {
         roles.add(new UserRoles(this,
-                                role));
+                role));
     }
 
     public StrainModel getCurrentStrain() {
@@ -183,12 +165,10 @@ public class User
     }
 
     @JsonIgnore
-    public List<SimpleGrantedAuthority> getAuthority()
-    {
+    public List<SimpleGrantedAuthority> getAuthority() {
         List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
 
-        for (UserRoles r : this.roles)
-        {
+        for (UserRoles r : this.roles) {
             String myRole = "ROLE_" + r.getRole()
                     .getName()
                     .toUpperCase();

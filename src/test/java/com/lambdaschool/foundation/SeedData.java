@@ -21,8 +21,7 @@ import java.util.ArrayList;
 @Transactional
 @Component
 public class SeedData
-        implements CommandLineRunner
-{
+        implements CommandLineRunner {
     /**
      * Connects the Role Service to this process
      */
@@ -48,8 +47,7 @@ public class SeedData
     @Override
     public void run(String[] args)
             throws
-            Exception
-    {
+            Exception {
         Role r1 = new Role("admin");
         Role r2 = new Role("user");
         Role r3 = new Role("data");
@@ -61,56 +59,56 @@ public class SeedData
         // admin, data, user
         ArrayList<UserRoles> admins = new ArrayList<>();
         admins.add(new UserRoles(new User(),
-                                 r1));
+                r1));
         admins.add(new UserRoles(new User(),
-                                 r2));
+                r2));
         admins.add(new UserRoles(new User(),
-                                 r3));
+                r3));
         User u1 = new User("admin",
-                           "password",
-                           "admin@lambdaschool.local",
-                           admins);
+                "password",
+                "admin@lambdaschool.local",
+                admins);
 
         userService.save(u1);
 
         // data, user
         ArrayList<UserRoles> datas = new ArrayList<>();
         datas.add(new UserRoles(new User(),
-                                r3));
+                r3));
         datas.add(new UserRoles(new User(),
-                                r2));
+                r2));
         User u2 = new User("cinnamon",
-                           "1234567",
-                           "cinnamon@lambdaschool.local",
-                           datas);
+                "1234567",
+                "cinnamon@lambdaschool.local",
+                datas);
         userService.save(u2);
 
         // user
         ArrayList<UserRoles> users = new ArrayList<>();
         users.add(new UserRoles(new User(),
-                                r2));
+                r2));
         User u3 = new User("barnbarn",
-                           "ILuvM4th!",
-                           "barnbarn@lambdaschool.local",
-                           users);
+                "ILuvM4th!",
+                "barnbarn@lambdaschool.local",
+                users);
         userService.save(u3);
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(),
-                                r2));
+                r2));
         User u4 = new User("puttat",
-                           "password",
-                           "puttat@school.lambda",
-                           users);
+                "password",
+                "puttat@school.lambda",
+                users);
         userService.save(u4);
 
         users = new ArrayList<>();
         users.add(new UserRoles(new User(),
-                                r2));
+                r2));
         User u5 = new User("misskitty",
-                           "password",
-                           "misskitty@school.lambda",
-                           users);
+                "password",
+                "misskitty@school.lambda",
+                users);
         userService.save(u5);
     }
 }
