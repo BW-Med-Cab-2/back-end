@@ -6,6 +6,7 @@
 
 ```shell script
 https://medcab2.herokuapp.com/createnewuser
+https://medcab2.herokuapp.com/login
 https://medcab2.herokuapp.com/users/users
 https://medcab2.herokuapp.com/users/currentuser
 https://medcab2.herokuapp.com/strains/strains
