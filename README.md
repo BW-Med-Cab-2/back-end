@@ -39,6 +39,27 @@ OUTPUT
 ```
 </details>
 
+## login
+<details>
+<summary>POST https://medcab2.herokuapp.com/createnewuser</summary>
+
+```JSON
+{
+    "username": "finn the human",
+    "password": "password"
+}
+```
+OUTPUT
+
+```JSON
+{
+  "access_token":"29ef8d09-e8cb-42c7-a061-ac350afca0a6",
+  "token_type":"bearer",
+  "scope":"read write trust"
+}
+```
+</details>
+
 ## users
 
 <details>
