@@ -43,7 +43,6 @@ public class SeedData
             Exception {
 
         Role r2 = new Role("user");
-
         r2 = roleService.save(r2);
 
         ArrayList<UserRoles> users = new ArrayList<>();
