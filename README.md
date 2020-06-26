@@ -268,7 +268,6 @@ OUTPUT
 ```
 </details>
 
-## topten
 <details>
 <summary>https://medcab2.herokuapp.com/otherapis/toptenrating</summary>
 
