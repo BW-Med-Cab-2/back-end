@@ -1,5 +1,8 @@
 # Medcab Spring API
 
+## About the project
+
+Medcab allows you to get medications fast by finding prescriptions based on your symptoms.
 
 ## Heroku App: https://medcab2.herokuapp.com/
 
