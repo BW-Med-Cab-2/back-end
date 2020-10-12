@@ -45,7 +45,7 @@ OUTPUT
 
 ## login
 <details>
-<summary>POST https://medcab2.herokuapp.com/createnewuser</summary>
+<summary>POST https://medcab2.herokuapp.com/login</summary>
 
 ```JSON
 {
